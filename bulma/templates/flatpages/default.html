@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{flatpage.title}}{% endblock %}
+
+{% block navbar %}
+  {% if request.GET.topbar != "0" %}  
+    {% include "navbar2.html" %}
+  {% endif %}
+{% endblock %}
+
+{% block html_class %}
+  {% if request.GET.topbar == "0" %}
+  {% else %}
+    has-navbar-fixed-top
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <section class="section" >
+    <div class="container" >
+      <h1 class="title" >{{flatpage.title}}</h1>
+      <div class="content" >
+	{{flatpage.content|linebreaks}}
+      </div>
+    </div>
+  </section>
+{% endblock %}

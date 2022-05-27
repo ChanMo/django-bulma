@@ -1,0 +1,10 @@
+<b>{{field.label}}</b>:
+{% if field.widget_type == "radioselect" %}
+  {% for option in field.field.widget.choices %}
+    {% if option.0|slugify == field.value %}
+      <label class="is-pulled-right" >{{option.1}}</label>
+    {% endif %}
+  {% endfor %}
+{% else %}
+  <label class="is-pulled-right">{{field.value|default:""}}</label>
+{% endif %}

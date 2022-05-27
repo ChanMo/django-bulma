@@ -1,0 +1,77 @@
+{% if form.non_field_errors %}
+  <div class="notification is-danger is-light">
+    {{form.non_field_errors.0}}
+  </div>
+{% endif %}
+
+{% for field in form %}
+  <div class="field is-horizontal">
+    {% with widget=field.field.widget %}
+      {% if field.widget_type == "usertree" %}
+	<div class="field-label is-normal" >
+	  <label class="label" >{{field.label}}</label>
+	</div>
+	<div class="field-body" >
+	  {{field}}
+	</div>
+
+      {% elif field.widget_type == "select" %}
+	<div class="field-label is-normal" >
+	  <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+	</div>
+	<div class="field-body" >
+	  <div class="control" >
+	    <div class="select" >
+	      {{field}}
+	    </div>
+	  </div>
+	</div>	
+
+      {% elif field.widget_type == "textarea" %}
+	<div class="field-label is-normal" >
+	  <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+	</div>
+	<div class="field-body" >
+	  <div class="control" >
+	    <textarea class="textarea" name="{{field.name}}" {% if field.field.required %}required{% endif %}>
+	      {% if field.value %}{{field.value}}{% endif %}
+	    </textarea>
+	  </div>
+	</div>
+
+      {% else %}
+	<div class="field-label is-normal" >
+	  <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+	</div>
+	<div class="field-body" >
+	  <div class="control" >
+	    <input class="input {% if field.errors %}is-danger{% endif %}"
+		   id="{{field.id_for_label}}"
+		   {% if widget.format_key == "DATE_INPUT_FORMATS" %}
+		   type="date"
+		   value="{{field.value}}"
+		   {% elif widget.format_key == "DATETIME_INPUT_FORMATS" %}
+		   type="datetime-local"
+		   value="{{field.value}}"
+		   {% else %}
+		   type="{{ widget.input_type }}"
+		   {% if field.value != None %}
+		   value="{{ field.value|stringformat:'s' }}"
+		   {% endif %}
+		   {% endif %}
+		   name="{{ field.name }}"
+		   {% if field.field.required %}required{% endif %}
+		   {% include "attrs.html" %}>
+	  </div>
+	</div>
+      {% endif %}
+    {% endwith %}
+
+    {% for error in field.errors %}
+      <p class="help has-text-danger">{{error}}</p>
+    {% endfor %}
+    {% if field.help_text %}
+      <div class="help">{{ field.help_text|safe }}</div>
+    {% endif %}
+  </div>
+{% endfor %}

@@ -1,0 +1,16 @@
+<div class="field is-horizontal" >
+  <div class="field-label  {% if field.widget_type != "radioselect" %}is-normal{% endif %}" >
+    <label class="label" id="{{field.id_for_label}}">{% if field.field.widget.is_required %}<span class="has-text-danger mr-1">*</span>{% endif %}{{field.label}}</label>
+  </div>
+  <div class="field-body" >
+    <div class="field {% if field.widget_type == "radioselect" %}is-narrow{% endif %}" >
+      {{field}}
+      {% if field.help_text %}
+	<p class="help">{{field.help_text}}</p>
+      {% endif %}
+      {% if field.errors %}
+	<p class="help is-danger" >{{field.errors|join:","}}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>

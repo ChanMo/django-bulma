@@ -1,0 +1,12 @@
+<ul {% if root %} class="checkbox-tree"{% endif %}>
+  {% for row in users %}
+    <li>
+      <label class="checkbox" >
+	<input class="mr-1" type="checkbox" name="user" value="{{row.value}}">{{row.label}}
+      </label>
+      {% if row.children %}
+	{% include "accounts/user_tree.html" with users=row.children root=False %}
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

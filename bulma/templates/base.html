@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="{% block html_class %}has-navbar-fixed-top{% endblock %}" lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      {% block title %}{{title|default:"Demo Site"}}{% endblock %}
+    </title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {#<link rel="shortcut icon" href="{% static 'backend/img/favicon.ico' %}">#}
+    
+
+    {# Global stylesheets #}
+    <link rel="stylesheet" type="text/css" href="{% static 'backend/css/backend.css' %}">
+
+    {% block extra_css %}
+      {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+  </head>
+
+  <body class="{% block body_class %}{% endblock %}">
+
+    {% block navbar %}
+      {% include "navbar.html" %}
+    {% endblock %}
+    <div id="app" style="min-height:calc(100vh - 10.75rem)">
+      {% block content %}{% endblock %}
+    </div>
+    {% block footer %}
+      {% include "footer.html" %}
+    {% endblock %}
+
+    {# Global javascript #}
+    <script type="text/javascript" src="{% static 'backend/js/jdenticon.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backend/js/feather.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backend/js/backend.js' %}"></script>
+    <script>
+      feather.replace();
+    </script>
+
+    {% block extra_js %}
+      {# Override this in templates to add extra javascript #}
+    {% endblock %}
+  </body>
+</html>

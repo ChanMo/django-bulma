@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static i18n thumbnail %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block html_class %}{% endblock %}
+
+{% block extra_css %}
+  <style>
+   body {
+     background: linear-gradient(30deg, white 45%, transparent 15%, transparent 40%), linear-gradient(150deg, #1e47af 55%, white 45%);
+   }
+   .container {
+     max-width: 460px !important;
+     background: white;
+     padding: 3rem;
+     border-radius: 5px;
+     box-shadow: 1px 2px 4px lightgrey;
+   }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="has-text-centered my-6" style="margin-bottom:8vh !important;">
+      {% if request.site.setting.logo %}
+	<figure class="image is-inline-block">
+    {% comment %}
+	  {% thumbnail request.site.setting.logo "x120" as im %}
+	  <img src="{{im.url}}" />
+	  {% endthumbnail %}
+    {% endcomment %}
+    <img src="{{request.site.setting.logo.url}}" style="height:84px;" />
+	</figure>
+      {% else %}
+	<p class="has-text-white is-size-3">{{request.site.setting.site_name}}</p>
+      {% endif %}
+    </div>
+    <div class="container">
+      <h1 class="title has-text-centered mb-6" style="letter-spacing:2px;">欢迎回来</h1>
+
+      <form class="login" method="POST" action="{% url 'account_login' %}">
+	{% csrf_token %}
+	{% if form.non_field_errors %}
+	  <div class="notification is-danger is-light" >{{form.non_field_errors}}</div>
+	{% endif %}
+
+	<div class="field mb-5" >
+	  <div class="control has-icons-left" >
+	    <input name="login" class="input is-medium" type="text" placeholder="请输入账户名或手机号码" />
+	    <span class="icon is-small is-left" >
+	      <i data-feather="user"></i>
+	    </span>
+	  </div>
+	</div>
+	<div class="field mb-5" >
+	  <div class="control has-icons-left" >
+	    <input name="password" class="input is-medium" type="password" placeholder="请输入密码" />
+	    <span class="icon is-small is-left" >
+	      <i data-feather="lock"></i>
+	    </span>
+	  </div>
+	</div>
+	<p class="block has-text-right">
+	  <!-- <a href="/accounts/password_reset/" class="has-text-grey">{% trans "Forgot Password?" %}</a> -->
+	</p>
+	{% if redirect_field_value %}
+	  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+	{% endif %}
+	<div class="field" >
+	  <div class="control" >
+	    <button class="button is-primary is-fullwidth is-medium" type="submit">{% trans "Sign In" %}</button>
+	  </div>
+	</div>
+      </form>
+    </div>
+    {#{% if request.site.setting.signup_enabled %}#}
+      <p class="block has-text-centered py-5">还没有帐号? 请先<a href="{{signup_url}}">注册</a></p>
+    {#{% endif %}#}
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+   document.querySelector("form").addEventListener("submit", event => {
+     event.submitter.classList.add("is-loading")
+   })
+  </script>
+{% endblock %}

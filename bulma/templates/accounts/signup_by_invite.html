@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+  <section class="section" >
+    <div class="container" style="max-width:480px;">
+      <h1 class="title" >{{request.site.setting.site_name}}</h1>
+      <h2 class="subtitle" >Invite by {{object.org}}</h2>
+      <p class="block">您的邮箱: {{object.email}}</p>
+      <form method="post" >
+	{% csrf_token %}
+	{% include "form_snippet.html" %}
+	<div class="field mt-5" >
+	  <button class="button is-primary is-fullwidth" type="submit">注册</button>
+	</div>
+      </form>
+    </div>
+  </section>
+{% endblock %}
+{% block extra_js %}
+  <script>
+   document.querySelector("form").addEventListener("submit", event => {
+     event.submitter.classList.add("is-loading")
+   })
+  </script>  
+{% endblock %}

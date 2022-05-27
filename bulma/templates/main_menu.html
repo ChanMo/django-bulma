@@ -1,0 +1,25 @@
+<a class="navbar-item {% if request.path == '/' %}is-active{% endif %}" href="/">首页</a>
+{% if user.is_authenticated %}
+	  <a class="navbar-item" href="/_r/">
+	    控制台
+	  </a>
+
+  <a class="navbar-item {% if request.path == '/inbox/' %}is-active{% endif %}" href="/inbox/">
+    <span class="icon is-small">
+      {% with count=user.total_msg %}
+	{% if count %}
+	  <i class="badge tag is-rounded is-danger">{{count}}</i>
+	{% endif %}
+      {% endwith %}
+      <i data-feather="bell"></i>
+    </span>
+  </a>
+  {% include "profile_menu.html" %}
+{% else %}
+  <a class="navbar-item" href="/accounts/login/">
+    登录
+  </a>
+  <span class="navbar-item" >
+    <a class="button is-reverted is-warning" href="/accounts/signup/">注册</a>
+  </span>
+{% endif %}

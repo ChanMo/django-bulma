@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+	<div class="column" style="max-width:260px;">
+	  <aside class="menu">
+	    <p class="menu-label">账户设置</p>
+	    <ul class="menu-list">
+	      <li><a {% if request.path == "/students/update/" %}class="is-active"{% endif %} href="/students/update/">基础信息</a></li>
+	      <li><a {% if request.path == "/accounts/email/" %}class="is-active"{% endif %} href="{% url 'account_email' %}">邮箱管理</a></li>
+	      <li><a {% if request.path == "/accounts/password/change/" %}class="is-active"{% endif %} href="/accounts/password/change/">修改密码</a></li>
+	    </ul>
+	  </aside>
+	</div>
+	<div class="column">
+	  {% block inner %}{% endblock %}
+	</div>	
+      </div>
+    </div>
+  </section>
+{% endblock %}

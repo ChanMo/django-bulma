@@ -1,0 +1,77 @@
+{% load static %}
+<nav class="navbar is-fixed-top is-link noprint">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item has-text-weight-bold" href="/">DSOOU</a>
+      <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </div>
+    <div id="navbarMenuHeroA" class="navbar-menu">
+      <div class="navbar-start">
+      </div>
+      <div class="navbar-end">
+        {% if not user.is_authenticated %}
+          <div class="navbar-item">
+            <div class="buttons">
+	      <a class="button is-primary" href="/accounts/signup/">
+		<span>免费注册</span>
+	      </a>
+              <a class="button is-light" href="/accounts/login/">
+		<span>登录</span>
+              </a>
+            </div>
+          </div>
+        {% else %}
+<a class="navbar-item {% if "help" in request.path %}is-active{% endif %}" href="{% url 'help:index' %}">帮助中心</a>
+	  <a class="navbar-item {% if request.path == '/inbox/' %}is-active{% endif %}" href="/inbox/">
+            <span class="icon is-small">
+              {% with count=user.total_msg %}
+		{% if count %}
+		  <i class="badge tag is-rounded is-danger">{{count}}</i>
+		{% endif %}
+              {% endwith %}
+              <i data-feather="bell"></i>
+            </span>
+          </a>
+	  {% include "profile_menu.html" %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+
+   {% comment %}
+   document.getElementById('user-tools').onclick = (e) => {
+   e.currentTarget.parentNode.classList.toggle('is-active');
+   };
+   {% endcomment %}
+
+   // Get all "navbar-burger" elements
+ const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+ // Check if there are any navbar burgers
+ if ($navbarBurgers.length > 0) {
+
+   // Add a click event on each of them
+   $navbarBurgers.forEach( el => {
+     el.addEventListener('click', () => {
+
+       // Get the target from the "data-target" attribute
+       const target = el.dataset.target;
+       const $target = document.getElementById(target);
+
+       // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+       el.classList.toggle('is-active');
+       $target.classList.toggle('is-active');
+
+     });
+   });
+ }
+
+ });
+</script>

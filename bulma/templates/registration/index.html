@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load wagtailimages_tags wagtailcore_tags %}
+{% block content %}
+  <section class="section">
+    <div class="container">
+    <div class="has-text-centered">
+      <figure class="image is-128x128 is-inline-block">
+	{% if user.wagtail_userprofile.avatar %}
+	  <img src="{{user.wagtail_userprofile.avatar.url}}" class="is-rounded" />
+	{% else %}
+	  <svg width="128" height="128" data-jdenticon-value="{{user.phone}}" class="is-rounded has-background-white"></svg>
+	{% endif %}
+      </figure>
+      <h1 class="title">{{user.username}}</h1>
+      <a href="/students/update/">设置</a>
+    </div>      
+    </div>
+  </section>
+  <section class="section">
+  <div class="container">
+
+    <div class="is-hidden">
+      <div class="tabs">
+	<ul>
+	  <li class="is-active"><a>我的课程</a></li>
+	  <li><a>我的答卷</a></li>	  
+	</ul>
+      </div>
+      {% if courses %}
+	<div class="columns is-multiple">
+	  {% for row in courses %}	
+	    <div class="column is-one-quarter">
+	      <a class="card is-block" href="{% pageurl row %}">
+		<div class="card-image has-background-grey-light">
+		  <figure class="image is-4by3">
+		    {% image row.cover fill-480x360 %}
+		  </figure>
+		</div>	      
+		<div class="card-content">
+		  <p class="is-size-5"><b>{{row.title}}</b></p>
+		  <p>讲师: {{row.lecturer.name}}</p>
+		</div>
+	      </a>
+	    </div>
+	  {% endfor %}	
+	</div>
+      {% else %}
+	<div class="block has-text-centered has-text-grey py-6">
+	  这里什么也没有
+	</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

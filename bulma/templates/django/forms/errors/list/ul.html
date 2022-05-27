@@ -1,0 +1,4 @@
+{#% if errors %}<ul class="{{ error_class }}">{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %#}
+{% for error in errors %}
+<p class="help is-danger">{{error}}</p>
+{% endfor %}

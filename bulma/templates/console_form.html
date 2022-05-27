@@ -1,0 +1,8 @@
+{% extends "console.html" %}
+{% block inner %}
+  <form method="post" style="max-width:480px;">
+    {% csrf_token %}
+    {% include "form_snippet.html" %}
+    {% include "form_submit.html" %}
+  </form>
+{% endblock %}

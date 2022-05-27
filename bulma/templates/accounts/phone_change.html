@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="section" >
+    <div class="container" style="width:600px;">
+      <h1 class="title" >更换手机号码</h1>
+      {% include "messages.html" %}
+      <form method="post" >
+	{% csrf_token %}
+	{% include "form_snippet.html" %}
+	<div class="field is-grouped" >
+	  <div class="control" >
+	    <button class="button is-primary" type="submit" >保存</button>
+	  </div>
+	  <div class="control" >
+	    <button class="button" data-goback>取消</button>
+	  </div>
+	</div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

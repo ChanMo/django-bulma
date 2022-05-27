@@ -1,0 +1,48 @@
+{% load mptt_tags menu_tags %}
+<style>
+ aside.menu .menu-label:hover {
+   color: rgba(0,0,0,0.85);
+ }
+</style>
+<aside class="menu">
+  {% for node in menus %}
+    <p class="menu-label is-size-6 is-clickable">{{node.name}}</p>
+    {% if not node.is_leaf_node %}
+      <ul class="menu-list">
+	{% for node in node.get_children %}
+	  {% if node.is_active %}
+	    {% check_visible node as node_visible %}
+	    {% if node_visible %}
+	      <li>
+		<a href="/@{{org.slug}}{% if node.path %}{{node.path}}{% else %}{% endif %}" {% if node.path in current and node.path != "/" %}class="is-active"{% elif node.path == "/" and current == "/" %}class="is-active"{% endif %}>{{node.name}}</a>
+		{% if not node.is_leaf_node %}
+		  <ul>
+		    <li><a href="{{node.path}}">{{node.name}}</a></li>
+		  </ul>
+		{% endif %}
+	      </li>
+	    {% endif %}
+	  {% endif %}
+	{% endfor %}
+      </ul>
+    {% endif %}
+  {% endfor %}
+</aside>
+{% comment %}
+<script>
+ document.querySelector('#console-left .is-active').parentNode.parentNode.classList.remove("is-hidden")
+ const menus = document.querySelectorAll(".menu-label")
+ menus.forEach(e => {
+   e.addEventListener("click", event => {
+     event.preventDefault()
+     const nextEle = e.nextElementSibling
+     e.parentNode.querySelectorAll(".menu-list").forEach(ul => {
+       if(ul !== nextEle) {
+	 ul.classList.add("is-hidden")
+       }
+     })
+     nextEle.classList.toggle("is-hidden")
+   })
+ })
+</script>
+{% endcomment %}

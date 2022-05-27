@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    {% include "messages.html" %}
+    <h2 class="title">账户设置</h2>
+    {% if form.non_field_errors %}
+    <div class="notification is-danger is-light">
+      {{form.non_field_errors.0}}
+    </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% include "form_snippet.html" %}
+      <div class="field mb-5">
+        <label class="label">个人资料</label>
+        <a href="/students/update/">编辑</a>
+      </div>      
+      <div class="field mb-5">
+        <label class="label">邮箱</label>
+        <a href="{% url 'account_email' %}">管理邮箱</a>
+      </div>
+      <div class="field mb-5">
+        <label class="label">登录密码</label>
+        <a href="/accounts/password/change/">修改登录密码</a>
+      </div>
+      <div class="field mb-5">
+        <label class="label">我购买的课程</label>
+        <a href="/mylivecourses/">查看所有</a>
+      </div>
+      <div class="field mb-5">
+	<label class="label">课程订单</label>
+	<a href="/ecommerce/order/">查看所有</a>
+      </div>
+      <div class="field is-hidden">
+        <input type="submit" class="button is-primary" value="保存" />
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

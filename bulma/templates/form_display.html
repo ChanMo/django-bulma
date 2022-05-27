@@ -1,0 +1,30 @@
+<table class="table is-bordered">
+  <tbody>
+    {% for field in form %}
+      <tr>
+	{% with widget=field.field.widget %}
+	  {% if widget.input_type == "select" %}
+	    <td>{{field.label}}</td>
+	    <td>
+	      {% for choice in field.field.widget.choices %}
+		{% if choice.0|slugify == field.value %}
+		  {{choice.1}}
+		{% endif %}
+	      {% endfor %}
+	    </td>
+	  {% elif widget.input_type == "file" %}
+	    <td>{{field.label}}</td>
+	    <td>
+	      {% if field.value %}
+		<a href="/media/{{field.value}}">{{field.value}}</a>
+	      {% endif %}
+	    </td>
+	  {% else %}
+	    <td>{{field.label}}</td>
+	    <td>{{field.value}}</td>
+	  {% endif %}
+	{% endwith %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

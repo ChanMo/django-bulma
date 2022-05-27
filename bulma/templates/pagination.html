@@ -1,0 +1,31 @@
+{% if page_obj.paginator.num_pages > 1 %}
+  <nav class="pagination" role="navigation" aria-label="pagination">
+    {% if page_obj.has_previous %}
+      <a class="pagination-previous" href="?page={{page_obj.previous_page_number}}">上一页</a>
+    {% endif %}
+    {% if page_obj.has_next %}
+      <a class="pagination-next" href="?page={{page_obj.next_page_number}}">下一页</a>
+    {% endif %}
+    <ul class="pagination-list">
+      {% if page_obj.has_previous %}
+	{% if page_obj.previous_page_number > 1 %}
+	  <li><a class="pagination-link" aria-label="first page" href="?page=1">1</a></li>
+	  {% if page_obj.previous_page_number > 2 %}
+	    <li><span class="pagination-ellipsis">&hellip;</span></li>
+	  {% endif %}
+	{% endif %}
+	<li><a class="pagination-link" aria-label="page {{page_obj.previous_page_number}}" href="?page={{page_obj.previous_page_number}}">{{page_obj.previous_page_number}}</a></li>
+      {% endif %}
+      <li><a class="pagination-link is-current">{{page_obj.number}}</a></li>
+      {% if page_obj.has_next %}
+	<li><a class="pagination-link" aria-label="page {{page_obj.next_page_number}}" href="?page={{page_obj.next_page_number}}">{{page_obj.next_page_number}}</a></li>
+	{% if page_obj.next_page_number < page_obj.paginator.num_pages %}
+	  {% if page_obj.next_page_number|add:"1" < page_obj.paginator.num_pages %}
+	    <li><span class="pagination-ellipsis">&hellip;</span></li>
+	  {% endif %}
+	  <li><a class="pagination-link" aria-label="last page" href="?page={{page_obj.paginator.num_pages}}">{{page_obj.paginator.num_pages}}</a></li>
+	{% endif %}
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

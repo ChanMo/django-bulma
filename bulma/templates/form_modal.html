@@ -1,0 +1,16 @@
+{% extends "modal.html" %}
+{% block inner %}
+  {% block notice %}{% endblock %}  
+  <form method="post" enctype="multipart/form-data" >
+    {% csrf_token %}
+    {% include "form_snippet.html" %}
+    <div class="field is-grouped" >
+      <p class="control" >
+	<button type="submit" class="button is-primary" >保存</button>
+      </p>
+      <p class="control" >
+	<a data-goback class="button" >取消</a>
+      </p>
+    </div>
+  </form>
+{% endblock %}

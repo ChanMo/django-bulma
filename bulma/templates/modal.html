@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block html_class %}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+  <section class="section" >
+    <div class="container" style="max-width:600px;">
+      <div class="level is-mobile" style="margin-left:-2.8rem;">
+	<div class="level-left" >
+	  <div class="level-item" >
+	    <a data-goback class="icon is-medium">
+	      <i data-feather="chevron-left" width="30" height="30"></i>
+	    </a>
+	  </div>
+	  <div class="level-item" >
+	    <h1 class="title" >{% block modal_title %}{{title}}{% endblock %}</h1>
+	  </div>
+	</div>
+      </div>
+      {% include "messages.html" %}      
+      {% block inner %}{% endblock %}
+    </div>
+  </section>
+{% endblock %}

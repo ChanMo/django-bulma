@@ -1,0 +1,26 @@
+{% load utils_tags %}
+<style>
+ .table th {
+   white-space: nowrap;
+ }
+</style>
+<table class="table is-bordered is-fullwidth">
+  <thead>
+    <tr>
+      {% with labels=field.field.widget.formset.0 %}
+	{% for field in labels %}
+	  <th>{{field.label}}</th>
+	{% endfor %}
+      {% endwith %}
+    </tr>
+  </thead>
+  {% for form in field.value|json_parse %}
+    <tbody>
+      <tr>
+	{% for field in form.values %}
+	  <td>{{field}}</td>
+	{% endfor %}
+      </tr>
+    </tbody>
+  {% endfor %}
+</table>

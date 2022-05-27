@@ -1,0 +1,11 @@
+<nav class="breadcrumb has-background-light py-2 px-4" aria-label="breadcrumbs">
+  <ul>
+    {% for link in breadcrumbs %}
+      {% if not forloop.last %}
+	<li><a href="{{link.1}}">{{link.0}}</a></li>
+      {% else %}
+	<li class="is-active"><a href="#" aria-current="page">{{link.0}}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</nav>

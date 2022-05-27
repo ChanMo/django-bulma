@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}退出登录{% endblock %}
+{% block content %}
+  <section class="section">
+    <div class="container has-text-centered">
+      <h1 class="title">您已退出</h1>
+      <div class="block">感谢您的使用</div>
+      <div class="buttons is-centered" >
+	<!-- <a href="/" class="button is-primary">返回首页</a> -->
+	<a href="/accounts/login/" class="button is-primary" >重新登录</a>
+      </div>
+
+
+      <!-- <form method="post">
+	   {% csrf_token %}
+	   <div class="field is-grouped is-grouped-centered mt-4">
+	   <p class="control" >
+	   <input type="submit" class="button is-primary" value="退出" />
+	   </p>
+	   <p class="control" >
+	   <a href="javascript:window.history.back()" class="button">取消</a>
+	   </p>
+	   </div>
+	   </form> -->
+    </div>
+  </section>
+{% endblock %}

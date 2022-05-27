@@ -1,0 +1,11 @@
+{% extends "accounts/settings.html" %}
+{% block title %}我的信息{% endblock %}
+{% block inner %}
+  <form method="post" >
+    {% csrf_token %}
+    {% include "form_snippet.html" %}
+    <div class="field" >
+      <input class="button is-primary" type="submit" value="修改我的信息" />
+    </div>
+  </form>
+{% endblock %}

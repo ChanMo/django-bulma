@@ -1,0 +1,109 @@
+{% load account_extras %}
+<div class="control" >
+  <input type="text" class="input {% if field.errors %}is-danger{% endif %}" name="{{widget.name}}" id="{{widget.attrs.id}}" value="{{widget.value|default:""}}" autocomplete="off" readonly />
+</div>
+<style>
+ .checkbox-tree li {
+   padding-left: 1.5rem;
+ }
+ .checkbox-tree > li {
+   padding-left: 0;
+ }
+</style>
+<div class="modal" id="{{widget.attrs.id}}_modal">
+  <div class="modal-background" data-modal-close></div>
+  <div class="modal-card" >
+    <header class="modal-card-head" >
+      <p class="modal-card-title" >选择用户</p>
+      <button class="delete" aria-label="close" data-modal-close></button>
+    </header>
+    <section class="modal-card-body" >
+      <!-- <input type="text" class="input" name="receivers" id="id_tree" /> -->
+      <!-- <input type="text" class="input" id="id_tree_label" /> -->
+      {% user_tree %}
+    </section>
+    <footer class="modal-card-foot" >
+      <button class="button is-success" id="modal-submit">确定</button>
+      <button class="button" data-modal-close>取消</button>
+    </footer>
+  </div>
+</div>
+
+<script>
+ const id = "{{widget.attrs.id}}"
+ var users = []
+ /*  var labels = [] */
+ /*  const treeInput = document.getElementById("id_tree") */
+ /*  const treeInputLabel = document.getElementById("id_tree_label") */
+ const checkedTree = document.querySelectorAll(`#${id}_modal [name='user']`)
+ checkedTree.forEach(ele => {
+   ele.addEventListener("change", event => {
+     const checked = ele.checked
+
+     // children
+     const children = ele.parentNode.nextElementSibling
+     if(children !== null) {
+       if(checked) {
+	 children.querySelectorAll("input").forEach(e => e.checked = true)
+       } else {
+	 children.querySelectorAll("input").forEach(e => e.checked = false)
+       }
+     }
+
+     // parents
+     checkParentChecked(ele)
+
+     // update values
+     users = []
+     /*      labels = [] */
+     checkedTree.forEach(ele => {
+       if(ele.checked && ele.value) {
+	 users.push(ele.value)
+	 //labels.push(ele.parentNode.textContent.trim())
+       }
+     })
+     /*      treeInput.value = users.join(',') */
+     /*      treeInputLabel.value = labels.join(',') */
+   })
+ })
+
+ /**
+  * check parent checked
+  */
+ function checkParentChecked(ele) {
+   const checked = ele.checked
+   const parentWrap = ele.parentNode.parentNode.parentNode.previousElementSibling
+   if(parentWrap) {
+     const parentEle = parentWrap.querySelector("input")
+     const siblings = parentEle.parentNode.nextElementSibling
+     if(siblings !== null) {
+       if(checked && !siblings.querySelector("input:not(:checked)")) {
+	 parentEle.checked = true
+       } else if(!checked){
+	 parentEle.checked = false
+       }
+     }
+     checkParentChecked(parentEle)
+   }
+ }
+
+ const modal = document.getElementById(`${id}_modal`)
+ const input = document.getElementById(id)
+ input.addEventListener("click", (event) => {
+   event.preventDefault()
+   modal.classList.add("is-active")
+ })
+
+ document.querySelectorAll(`#${id}_modal [data-modal-close]`).forEach(ele => {
+   ele.addEventListener("click", event => {
+     event.preventDefault()
+     modal.classList.remove("is-active")
+   })
+ })
+
+ document.getElementById("modal-submit").addEventListener("click", event => {
+   event.preventDefault()
+   modal.classList.remove("is-active")
+   input.value = users.join(',')
+ })
+</script>

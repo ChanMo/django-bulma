@@ -1,0 +1,46 @@
+<form method="get" class="has-background-light py-3 px-3 my-4 noprint" onsubmit="return clean_filter(this)">
+  <div class="field is-grouped">
+    {% for field in filter.form %}
+      <div class="control">
+	<!-- <label class="label">{{field.label}}</label> -->
+	<div class="select is-small" >
+	  <select name="{{field.name}}">
+	    {% if field.field.choices %}
+	      <option value>
+		{% if field.label != '[invalid name]' %}
+		  请选择{{field.label}}		  
+		{% else %}
+    {#请选择{{field.field.queryset|qs_label}}#}
+    -----------
+		{% endif %}
+	      </option>
+	    {% endif %}
+            {% for o in field.field.widget.choices %}
+	      {% if o.0 %}
+		<option
+		  value="{{o.0}}"
+			 {% if field.value == o.0|stringformat:"s" or o.0|stringformat:"s" in field.value %}
+		    selected
+			 {% endif %}>
+		  {% if o.0 == 'unknown' %}
+		    请选择是否{{field.label}}
+		  {% else %}
+		    {{o.1}}
+		  {% endif %}
+		</option>
+	      {% endif %}
+            {% endfor %}
+	  </select>
+	</div>
+      </div>
+    {% endfor %}
+    <div class="control">
+      <input class="button is-small" type="submit" value="筛选" />
+    </div>
+  </div>
+</form>
+<script>
+ function clean_filter(form) {
+   return true
+ }
+</script>

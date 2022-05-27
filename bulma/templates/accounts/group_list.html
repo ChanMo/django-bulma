@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="section" >
+    <div class="container" >
+      <h1 class="title" >账户管理</h1>
+      {% include "accounts/tabs.html" with active="group" %}
+      {% include "utils/search.html" %}
+      {% if filter.filters %}
+	{% include "filters.html" %}
+      {% endif %}
+      {% if object_list %}
+	{% include "utils/object_list.html" %}
+      {% else %}
+	{% include "empty.html" %}
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

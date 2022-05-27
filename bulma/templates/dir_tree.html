@@ -1,0 +1,21 @@
+{% load dav_tags utils_tags %}
+<ul {% if parent != "" and parent not in dir %} class="is-hidden"{% endif %}>
+  {% for row in paths %}
+    <li>
+      <div>
+	<span class="icon">
+	  <i data-feather="chevron-right" width="16" height="16"></i>
+	</span>
+	<a href="{% url "projects:detail" pk=object.pk %}?dir={{row.path|clean_path}}">
+	  <span class="icon">
+	    <i data-feather="folder" width="16" height="16"></i>
+	  </span>
+	  {{row.path|clean_name}}
+	</a>
+      </div>
+      {% if row.children %}
+	{% include "dir_tree.html" with paths=row.children parent=row.path|clean_path %}
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

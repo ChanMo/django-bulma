@@ -1,0 +1,6 @@
+<b>{{label}}</b>:
+{% if link %}
+  <a href="{{link}}" >{{value}}</a>
+{% else %}
+  <span class="is-pulled-right {% if color %}has-text-{{color}}{% endif %}">{{value}}</span>
+{% endif %}

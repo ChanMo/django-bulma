@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block extra_css %}
+  <style>
+   .tabs-container {
+     padding: 0 1.5rem;
+   }
+   .tabs-container {
+     position: relative;
+   }
+   .tabs-container::before {
+     content: "";
+     display: block;
+     bottom: 0;
+     left: 0;
+     height: 1px;
+     width: 100%;
+     background: #dbdbdb;
+     position: absolute;
+   }
+   .tabs a {
+     padding: 0.5rem 0;
+     margin-right: 1.5rem;
+   }
+  </style>
+{% endblock %}
+{% block content %}
+  <section class="section pb-5" >
+    <div class="container">
+      <div class="media" >
+	<figure class="media-left" >
+	  <p class="image is-86x86" >
+	    <svg width="86" height="86" data-jdenticon-value="{{user.username}}"></svg>
+	  </p>
+	</figure>
+	<div class="media-content">
+	  <h1 class="title mb-1 is-size-3" >{{user.username}}</h1>
+	  <p class="block has-text-grey is-size-7">
+	    {{user.email|default:""}}
+	  </p>
+	</div>
+      </div>
+
+    </div>
+  </section>
+  <section class="tabs-container">
+    <div class="tabs">
+      <div class="container">
+	<ul>
+	  <li {% if request.path == "/accounts/profile/" %}class="is-active"{% endif %}><a href="/accounts/profile/">基础信息</a></li>
+	  <li {% if request.path == "/accounts/email/" %}class="is-active"{% endif %}><a href="/accounts/email/">邮箱设置</a></li>
+	  <li {% if request.path == "/accounts/password/change/" %}class="is-active"{% endif %}><a href="/accounts/password/change/">修改密码</a></li>
+	</ul>
+      </div>
+    </div>
+  </section>
+  <section class="section pt-5" >
+    <div class="container" >
+      {#<h1 class="subtitle">{% block subtitle %}{{title}}{% endblock %}</h1>#}
+      {% include "messages.html" %}
+      {% block inner %}
+	<form method="post" style="max-width:400px;">
+	  {% csrf_token %}
+	  {% include "form_snippet.html" %}
+	  <div class="field is-grouped mt-6" >
+	    <p class="control" >
+	      <button type="submit" class="button is-primary" >保存</button>
+	    </p>
+	    <p class="control" >
+	      <button data-goback class="button" >取消</button>
+	    </p>
+	  </div>
+	</form>
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}
