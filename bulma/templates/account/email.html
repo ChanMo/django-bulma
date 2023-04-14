@@ -1,11 +1,11 @@
 {% extends "accounts/settings.html" %}
 {% load i18n %}
-{% block head_title %}{% trans "E-mail Addresses" %}{% endblock %}
+{% block title %}{% translate "E-mail Addresses" %}{% endblock %}
 {% block inner %}
   <div style="max-width:480px;" >
-    <!-- <h1 class="title">{% trans "E-mail Addresses" %}</h1> -->
+    <!-- <h1 class="title">{% translate "E-mail Addresses" %}</h1> -->
     {% if user.emailaddress_set.all %}
-      <p class="block">{% trans 'The following e-mail addresses are associated with your account:' %}</p>
+      <p class="block">{% translate 'The following e-mail addresses are associated with your account:' %}</p>
       <form action="{% url 'account_email' %}" class="email_list" method="post">
 	{% csrf_token %}
 	<fieldset class="blockLabels">
@@ -16,35 +16,35 @@
 
 		{{ emailaddress.email }}
 		{% if emailaddress.verified %}
-		  <span class="verified tag">{% trans "Verified" %}</span>
+		  <span class="verified tag">{% translate "Verified" %}</span>
 		{% else %}
-		  <span class="unverified tag is-danger">{% trans "Unverified" %}</span>
+		  <span class="unverified tag is-danger">{% translate "Unverified" %}</span>
 		{% endif %}
-		{% if emailaddress.primary %}<span class="primary tag is-primary">{% trans "Primary" %}</span>{% endif %}
+		{% if emailaddress.primary %}<span class="primary tag is-primary">{% translate "Primary" %}</span>{% endif %}
 	      </label>
 	    </div>
 	  {% endfor %}
 
 	  <div class="buttonHolder buttons mb-4">
-	    <button class="secondaryAction button is-small" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
-	    <button class="secondaryAction button is-small" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
-	    <button class="primaryAction button is-small" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+	    <button class="secondaryAction button is-small" type="submit" name="action_primary" >{% translate 'Make Primary' %}</button>
+	    <button class="secondaryAction button is-small" type="submit" name="action_send" >{% translate 'Re-send Verification' %}</button>
+	    <button class="primaryAction button is-small" type="submit" name="action_remove" >{% translate 'Remove' %}</button>
 	  </div>
 
 	</fieldset>
       </form>
 
     {% else %}
-      <p class="block"><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
+      <p class="block"><strong>{% translate '提醒:'%}</strong> {% translate "您目前没有设置任何电子邮件地址。您确实应该添加一个电子邮件地址，以便接收通知、重置密码等。" %}</p>
     {% endif %}
 
     {% if can_add_email %}
-      <h2 class="subtitle">{% trans "Add E-mail Address" %}</h2>
+      <h2 class="subtitle">{% translate "添加邮箱" %}</h2>
 
       <form method="post" action="{% url 'account_email' %}" class="add_email">
-	{% csrf_token %}
-	{% include "form_snippet.html" %}
-	<button class="button is-primary" name="action_add" type="submit">{% trans "Add E-mail" %}</button>
+				{% csrf_token %}
+				{% include "form_snippet.html" %}
+				<button class="button is-primary" name="action_add" type="submit">{% translate "保存" %}</button>
       </form>
 
     {% endif %}
@@ -53,9 +53,10 @@
 
 
 {% block extra_js %}
+  {{block.super}}
   <script type="text/javascript">
    (function() {
-     var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
+     var message = "{% translate 'Do you really want to remove the selected e-mail address?' %}";
      var actions = document.getElementsByName('action_remove');
      if (actions.length) {
        actions[0].addEventListener("click", function(e) {

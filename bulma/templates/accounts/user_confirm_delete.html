@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+  <section class="section">
+    <div class="container" style="max-width:600px">
+      <h1 class="title">{% translate "Delete" %} "{{object}}"</h1>
+      <p class="notification is-light is-warning">{% translate "The Data will not be restore once be deleted, please be attentance." %}</p>
+      <form method="post">
+	{% csrf_token %}
+	<div class="field is-grouped">
+	  <div class="control">
+	    <button class="button is-danger" type="submit">{% translate "Delete" %}</button>
+	  </div>
+	  <div class="control">
+	    <a class="button" href="javascript:window.history.back();">{% translate "Cancel" %}</a>
+	  </div>
+	</div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

@@ -15,7 +15,7 @@
      background: var(--primary-color) !important;
    }
    .hero {
-     {#background-image: url('{% static "backend/img/bg1.jpg" %}');#}
+     {#background-image: url('{% static "server/img/bg1.jpg" %}');#}
      background-size: cover;
      background-position: center;
    }
@@ -24,39 +24,19 @@
    }
   </style>
 {% endblock %}
-{% block html_class %}{% endblock %}
-{% block navbar %}{% endblock %}
+{% block navbar %}
+  {% include "navbar.html" %}
+{% endblock %}
 {% block content %}
-  <section class="hero is-large is-dark" >
-    <div class="hero-head">
-      <nav class="navbar is-dark" >
-	<div class="container" >
-	  <div class="navbar-brand" >
-	    <a class="navbar-item" >
-	      <b class="is-size-5">DSOOU</b>
-	    </a>
-	    <span class="navbar-burger" data-target="navbarMenuHeroA" >
-	      <span></span>
-	      <span></span>
-	      <span></span>
-	    </span>
-	  </div>
-	  <div id="navbarMenuHeroA" class="navbar-menu" >
-	    <div class="navbar-end" >
-	      {% include "main_menu.html" %}
-	    </div>
-	  </div>
-	</div>
-      </nav>
-    </div>
     <div class="hero-body" >
       <div class="container" >
-	<p class="subtitle mb-4" >DSOOU</p>
-	     <p class="title is-size-1 mt-4 mb-6" >标准SASS平台架构</p>
-	     <a href="" class="button is-warning has-text-weight-bold">立即使用</a>
+	<p class="title mb-4 is-size-1" >MDAI</p>
+    <p class="subtitle mt-4 is-size-3" >MDAI is a new ai platform, <br>and one that is well suited to a wide range of purposes, <br>including business development, research, commercial projects, etc</p>
+	<a href="" class="button is-warning has-text-weight-bold">TRY NOW</a>
       </div>
     </div>
   </section>
+  {% comment %}
   <section class="section" >
     <div class="container" style="max-width:900px;">
       <h3 class="title is-4 mb-6">功能特性</h3>
@@ -64,7 +44,7 @@
         <div class="level-left">
           <div class="level-item">
             <figure class="image">
-              <img src="{% static "backend/img/img1.png" %}"  style="width:320px;" />
+              <img src="{% static "server/img/img1.png" %}"  style="width:320px;" />
             </figure>
           </div>
         </div>
@@ -89,16 +69,14 @@
         <div class="level-right">
           <div class="level-item">
             <figure class="image">
-              <img src="{% static "backend/img/img2.png" %}" style="width:320px;" />
+              <img src="{% static "server/img/img2.png" %}" style="width:320px;" />
             </figure>
           </div>
         </div>
       </div>
-      {% comment %}
       <div class="has-text-centered mt-5 mb-6">
-	<a class="button is-dark" href="/courses/">了解更多</a>
+      <a class="button is-dark" href="/courses/">了解更多</a>
       </div>
-      {% endcomment %}
     </div>
   </section>
   <section class="section has-background-info">
@@ -109,40 +87,41 @@
             <input type="email" class="input is-fullwidth is-medium" />
           </p>
           <p class="control">
-          <button class="button is-warning is-medium">订阅</button>
+            <button class="button is-warning is-medium">订阅</button>
           </p>
         </div>
       </form>
     </div>
   </section>
+      {% endcomment %}
 {% endblock %}
 
 {% block extra_js %}
-<script>
- document.addEventListener('DOMContentLoaded', () => {
+  <script>
+   document.addEventListener('DOMContentLoaded', () => {
 
-   // Get all "navbar-burger" elements
-   const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+     // Get all "navbar-burger" elements
+     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-   // Check if there are any navbar burgers
-   if ($navbarBurgers.length > 0) {
+     // Check if there are any navbar burgers
+     if ($navbarBurgers.length > 0) {
 
-     // Add a click event on each of them
-     $navbarBurgers.forEach( el => {
-       el.addEventListener('click', () => {
+       // Add a click event on each of them
+       $navbarBurgers.forEach( el => {
+	 el.addEventListener('click', () => {
 
-	 // Get the target from the "data-target" attribute
-	 const target = el.dataset.target;
-	 const $target = document.getElementById(target);
+	   // Get the target from the "data-target" attribute
+	   const target = el.dataset.target;
+	   const $target = document.getElementById(target);
 
-	 // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-	 el.classList.toggle('is-active');
-	 $target.classList.toggle('is-active');
+	   // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+	   el.classList.toggle('is-active');
+	   $target.classList.toggle('is-active');
 
+	 });
        });
-     });
-   }
+     }
 
- });
-</script>  
+   });
+  </script>
 {% endblock %}

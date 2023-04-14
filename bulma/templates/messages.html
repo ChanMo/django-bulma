@@ -1,7 +1,27 @@
+<style>
+  .notification{
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    top:20px;
+    z-index:3000;
+    border-radius:10px;
+  }
+</style>
 {% for message in messages %}
   {% if message.tags == "error" %}
-    <div class="notification is-danger is-light">{{ message }}</div>
+    <div class="notification is-danger is-light py-4">{{ message|safe }}</div>
   {% else %}
-    <div class="notification is-{{ message.tags }} is-light">{{ message }}</div>
+    <div class="notification is-{{ message.tags }} is-light py-4">{{ message }}</div>
   {% endif %}
 {% endfor %}
+<script>
+  setTimeout(()=>{
+    const notices = document.getElementsByClassName('notification')
+    if(notices.length){
+      for(let i =0;i<notices.length;i++){
+        notices[i].style.display = 'none'
+      }
+    }
+  },[3000])
+</script>

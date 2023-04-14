@@ -1,28 +1,20 @@
+{% load thumbnail %}
 <div class="navbar-item has-dropdown is-hoverable" href="/accounts/">
   <a class="navbar-link" id="user-tools">
-    {% comment %}
-    <figure class="image is-32x32">
-    {% if user.avatar %}
-    <img class="is-rounded" src="{{user.avatar.url}}" style="max-height:initial;" />
-    {% else %}
-    <svg width="32" height="32" data-jdenticon-value="{{user.phone}}"></svg>
-    {% endif %}
+    <figure class="image" style="height:32px;width:28px;">
+      {% if user.avatar %}
+	{% thumbnail user.avatar "64x64" crop="center" as im %}
+	<img class="is-rounded" src="{{im.url}}" />
+	{% endthumbnail %}
+      {% else %}
+      <svg width="32" height="32" data-jdenticon-value="{{user.email}}"></svg>
+      {% endif %}
     </figure>
-    {% endcomment %}
-    <span>{{user.username}}</span>
+    <!-- <span>{{user.username}}</span> -->
   </a>
   <div class="navbar-dropdown is-right">
     <a class="navbar-item" href="/accounts/profile/">我的信息</a>
-    <!-- <a class="navbar-item" href="/accounts/phone/change/">更换手机号码</a> -->
     <a class="navbar-item" href="/accounts/password/change/">修改密码</a>
-    {% comment %}
-      <hr class="navbar-divider" />
-      {% if user.is_superuser %}
-	<a class="navbar-item" href="/console/accounts/user/">用户管理</a>
-	<a class="navbar-item" href="/console/utils/setting/">系统设置</a>
-      {% endif %}
-    {% endcomment %}
-    <!-- <a class="navbar-item" href="/help/">使用帮助</a> -->
     <hr class="navbar-divider" />
     <a class="navbar-item" href="/accounts/logout/">退出登录</a>
   </div>

@@ -8,7 +8,7 @@
 
 {% block extra_css %}
   <style>
-   body {
+   #app {
      background: linear-gradient(30deg, white 45%, transparent 15%, transparent 40%), linear-gradient(150deg, #1e47af 55%, white 45%);
    }
    .container {
@@ -34,11 +34,11 @@
     <img src="{{request.site.setting.logo.url}}" style="height:84px;" />
 	</figure>
       {% else %}
-	<p class="has-text-white is-size-3">{{request.site.setting.site_name}}</p>
+	<p class="title has-text-white">{{request.site.setting.site_name|default:'MDAI'}}</p>
       {% endif %}
     </div>
     <div class="container">
-      <h1 class="title has-text-centered mb-6" style="letter-spacing:2px;">欢迎回来</h1>
+        <h1 class="title has-text-centered mb-6" style="letter-spacing:2px;">{% translate "Welcome back" %}</h1>
 
       <form class="login" method="POST" action="{% url 'account_login' %}">
 	{% csrf_token %}
@@ -48,7 +48,7 @@
 
 	<div class="field mb-5" >
 	  <div class="control has-icons-left" >
-	    <input name="login" class="input is-medium" type="text" placeholder="请输入账户名或手机号码" />
+          <input name="login" class="input is-medium" type="text" placeholder="{% translate "username or email address" %}" />
 	    <span class="icon is-small is-left" >
 	      <i data-feather="user"></i>
 	    </span>
@@ -56,15 +56,17 @@
 	</div>
 	<div class="field mb-5" >
 	  <div class="control has-icons-left" >
-	    <input name="password" class="input is-medium" type="password" placeholder="请输入密码" />
+          <input name="password" class="input is-medium" type="password" placeholder="{% translate "password" %}" />
 	    <span class="icon is-small is-left" >
 	      <i data-feather="lock"></i>
 	    </span>
 	  </div>
 	</div>
+	{% comment %}
 	<p class="block has-text-right">
-	  <!-- <a href="/accounts/password_reset/" class="has-text-grey">{% trans "Forgot Password?" %}</a> -->
+	  <a href="/accounts/password/reset/" class="has-text-grey">{% trans "Forgot Password?" %}</a>
 	</p>
+	{% endcomment %}
 	{% if redirect_field_value %}
 	  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
 	{% endif %}
@@ -75,9 +77,9 @@
 	</div>
       </form>
     </div>
-    {#{% if request.site.setting.signup_enabled %}#}
+    {% comment %}
       <p class="block has-text-centered py-5">还没有帐号? 请先<a href="{{signup_url}}">注册</a></p>
-    {#{% endif %}#}
+    {% endcomment %}
   </section>
 {% endblock %}
 

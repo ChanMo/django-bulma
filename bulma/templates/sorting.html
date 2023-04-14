@@ -1,0 +1,35 @@
+{% if filter.form.o %}
+  <form method="get">
+    <div class="field is-flex is-align-items-center">
+      <label class="label is-small mb-0 mr-2">排序方式</label>    
+      <div class="control">
+
+	<div class="select is-small" >
+	  <select name="o">
+            {% for o in filter.form.o.field.widget.choices %}
+	      {% if o.0 %}
+		<option
+		  value="{{o.0}}"
+		  {% if o.0 in filter.form.o.value %}
+		    selected
+		  {% endif %}>
+		  {{o.1}}
+		</option>
+	      {% endif %}
+            {% endfor %}
+	  </select>
+	</div>
+      </div>
+    </div>
+
+  </form>
+  <script>
+   document.querySelectorAll("[name=o]").forEach(e => {
+     e.addEventListener("change", ()=>{
+       e.closest("form").submit();     
+     });
+   });
+  </script>
+
+{% endif %}  
+

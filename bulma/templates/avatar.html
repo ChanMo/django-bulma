@@ -1,0 +1,10 @@
+{% load thumbnail %}
+<figure class="image is-{{size}}x{{size}}" style="border-radius:100%;overflow:hidden;">
+  {% if user.avatar %}
+    {% thumbnail user.avatar fullsize crop="center" as im %}
+      <img class="is-rounded" src="{{im.url}}" style="max-height:unset;" />
+    {% endthumbnail %}
+  {% else %}
+    <svg width="{{size}}" height="{{size}}" data-jdenticon-value="{{user.username}}"></svg>
+  {% endif %}
+</figure>

@@ -1,25 +1,31 @@
-<a class="navbar-item {% if request.path == '/' %}is-active{% endif %}" href="/">首页</a>
-{% if user.is_authenticated %}
-	  <a class="navbar-item" href="/_r/">
-	    控制台
-	  </a>
-
-  <a class="navbar-item {% if request.path == '/inbox/' %}is-active{% endif %}" href="/inbox/">
-    <span class="icon is-small">
-      {% with count=user.total_msg %}
-	{% if count %}
-	  <i class="badge tag is-rounded is-danger">{{count}}</i>
-	{% endif %}
-      {% endwith %}
-      <i data-feather="bell"></i>
-    </span>
+{% load static %}
+<nav class="navbar is-fixed-top noprint has-shadow">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item has-text-weight-bold" href="/">
+       <img src="{% static "backend/img/logo.png" %}" style="max-height:18px;" />
+     </a>
+   </div>
+   <div id="navbarMenuHeroA" class="navbar-menu">
+    <div class="navbar-start">
+     {% if request.user.is_authenticated %}
+     <a class="navbar-item" href="/papers/">我的文档</a>
+     {% endif %}
+   </div>
+ </div>
+ {% if user.is_authenticated %}
+ {% include "profile_menu.html" %}
+ {% else %}
+ <div class="navbar-item">
+  <div class="buttons">
+   <a class="button is-dark" href="/accounts/signup/">
+    <span>免费注册</span>
   </a>
-  {% include "profile_menu.html" %}
-{% else %}
-  <a class="navbar-item" href="/accounts/login/">
-    登录
+  <a class="button is-light" href="/accounts/login/">
+    <span>登录</span>
   </a>
-  <span class="navbar-item" >
-    <a class="button is-reverted is-warning" href="/accounts/signup/">注册</a>
-  </span>
+</div>
+</div>
+</div>
+</nav>
 {% endif %}

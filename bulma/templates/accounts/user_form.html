@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+  <section class="section">
+    <div class="container" style="max-width:600px;">
+      <h1 class="title">{% if not object %}{% translate "Create New User" %}{% else %}{% translate "Edit" %} "{{object}}"{% endif %}</h1>
+      {% include "messages.html" %}
+      <form method="post">
+	{% csrf_token %}
+	{{form}}
+	<div class="field is-grouped">
+	  <div class="control">
+	    <button class="button is-primary" type="submit" >{% translate "Submit" %}</button>
+	  </div>
+	  <div class="control">
+	    <a class="button" href="javascript:window.history.back();">{% translate "Cancel" %}</a>
+	  </div>
+	</div>
+      </form>
+    </div>
+  </section>
+{% endblock %}
