@@ -1,14 +1,33 @@
 Bulma主题模板
 =============
 
-为Django开发提供常用的页面模板
+基于`bulma.css`为Django开发提供常用的页面模板
+
+Screenshots
+-----------
+
+.. figure:: ./login.jpeg
+   :alt: Login Page
+
+   Login Page
+
+.. figure:: ./profile.jpeg
+   :alt: User Profile
+
+   User Profile
 
 Quick Start
 -----------
 
-修改\ ``settings.py``
+Install Package
 
-::
+.. code:: bash
+
+   pip install django-bulmacss
+
+修改`settings.py\`
+
+.. code:: bash
 
    INSTALLED_APPS = [
        'bulma',
@@ -20,29 +39,57 @@ Quick Start
 Includes
 --------
 
-基础模板
-~~~~~~~~
+Basic Templates
+~~~~~~~~~~~~~~~
 
 -  base.html
+-  index.html
 -  navbar.html
 -  footer.html
 -  profile.html
 -  empty.html
 -  pagination.html
--  search_bar.html
+-  search\ :sub:`bar`.html
 -  messages.html
+
+django.contrib.auth
+~~~~~~~~~~~~~~~~~~~
+
+-  registration
 
 django-allauth
 ~~~~~~~~~~~~~~
 
-替换allauth的简易模板
+-  account
 
-模板form表单
-~~~~~~~~~~~~
+form
+~~~~
 
-替换django默认的django/forms目录
+-  django
+
+django-flatpages
+~~~~~~~~~~~~~~~~
+
+-  flatpages/default.html
 
 django-filters
 ~~~~~~~~~~~~~~
 
 -  filters.html
+
+Extra
+-----
+
+Feather Icons
+~~~~~~~~~~~~~
+
+Simply beautiful open source icons
+
+https://feathericons.com/
+
+Jdenticon
+~~~~~~~~~
+
+Open source library for generating identicons.
+
+https://jdenticon.com/

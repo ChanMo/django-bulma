@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% load static i18n thumbnail %}
+{% load static i18n %}
+{% load account %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 {% block navbar %}{% endblock %}
@@ -8,79 +9,59 @@
 
 {% block extra_css %}
   <style>
-   #app {
-     background: linear-gradient(30deg, white 45%, transparent 15%, transparent 40%), linear-gradient(150deg, #1e47af 55%, white 45%);
+   html, body {
+     overflow: hidden;
    }
-   .container {
-     max-width: 460px !important;
-     background: white;
-     padding: 3rem;
-     border-radius: 5px;
-     box-shadow: 1px 2px 4px lightgrey;
+   #rightPanel {
+     background-image: url("/static/bulma/login_bg.jpg");
+     background-size: cover;
+     background-repeat: no-repeat;
+     background-position: center;
+     height: 100vh;
+     padding: 0;
    }
   </style>
 {% endblock %}
 
 {% block content %}
-  <section class="section">
-    <div class="has-text-centered my-6" style="margin-bottom:8vh !important;">
-      {% if request.site.setting.logo %}
-	<figure class="image is-inline-block">
-    {% comment %}
-	  {% thumbnail request.site.setting.logo "x120" as im %}
-	  <img src="{{im.url}}" />
-	  {% endthumbnail %}
-    {% endcomment %}
-    <img src="{{request.site.setting.logo.url}}" style="height:84px;" />
-	</figure>
-      {% else %}
-	<p class="title has-text-white">{{request.site.setting.site_name|default:'MDAI'}}</p>
-      {% endif %}
+  <div class="columns">
+    <div class="column is-narrow">
+      <div class="is-flex is-justify-content-center" style="width:600px;max-width:100%;">
+	<div style="width:420px;max-width:100%;" class="py-6 px-5">
+	  {% if request.site.setting.logo %}
+	    <img class="mb-6" src="{{request.site.setting.logo.url}}" style="height:32px;" />
+	  {% endif %}
+	<h1 class="title">欢迎登录</h1>	
+	<form method="post">
+	  {% csrf_token %}
+	  {% if form.non_field_errors %}
+	    <div class="notification is-danger is-light" >{{form.non_field_errors.0}}</div>
+	  {% endif %}
+	  <div class="field">
+	    <label class="label">登录帐号</label>
+	    <input type="text" name="login" class="input" placeholder="用户名, {% if request.site.setting.enabled_phonenumber %}手机号码, {% endif %}邮箱地址" />
+	  </div>
+	  <div class="field">
+	    <label class="label">帐号密码</label>
+	    <input type="password" name="password" class="input" placeholder="登录密码" />
+	  </div>
+	  <p class="has-text-right my-5"><a href="{% if request.site.setting.enabled_phonenumber %}/accounts/password/reset_by_phone/{% else %}/accounts/password/reset/{% endif %}" class="has-text-dark">{% trans "Forgot Password?" %}</a></p>
+	  {% if redirect_field_value %}
+	    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+	  {% endif %}
+	  <div class="field" >
+	    <div class="control" >
+	      <button class="button is-primary is-fullwidth is-medium" type="submit">登  录</button>
+	    </div>
+	  </div>
+	  <p class="has-text-centered py-5">还没有帐号? 请先<a href="{{signup_url}}" class="has-text-primary">注册</a></p>
+	</form>
+	</div>
+      </div>
     </div>
-    <div class="container">
-        <h1 class="title has-text-centered mb-6" style="letter-spacing:2px;">{% translate "Welcome back" %}</h1>
-
-      <form class="login" method="POST" action="{% url 'account_login' %}">
-	{% csrf_token %}
-	{% if form.non_field_errors %}
-	  <div class="notification is-danger is-light" >{{form.non_field_errors}}</div>
-	{% endif %}
-
-	<div class="field mb-5" >
-	  <div class="control has-icons-left" >
-          <input name="login" class="input is-medium" type="text" placeholder="{% translate "username or email address" %}" />
-	    <span class="icon is-small is-left" >
-	      <i data-feather="user"></i>
-	    </span>
-	  </div>
-	</div>
-	<div class="field mb-5" >
-	  <div class="control has-icons-left" >
-          <input name="password" class="input is-medium" type="password" placeholder="{% translate "password" %}" />
-	    <span class="icon is-small is-left" >
-	      <i data-feather="lock"></i>
-	    </span>
-	  </div>
-	</div>
-	{% comment %}
-	<p class="block has-text-right">
-	  <a href="/accounts/password/reset/" class="has-text-grey">{% trans "Forgot Password?" %}</a>
-	</p>
-	{% endcomment %}
-	{% if redirect_field_value %}
-	  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-	{% endif %}
-	<div class="field" >
-	  <div class="control" >
-	    <button class="button is-primary is-fullwidth is-medium" type="submit">{% trans "Sign In" %}</button>
-	  </div>
-	</div>
-      </form>
+    <div class="column is-hidden-mobile" id="rightPanel">
     </div>
-    {% comment %}
-      <p class="block has-text-centered py-5">还没有帐号? 请先<a href="{{signup_url}}">注册</a></p>
-    {% endcomment %}
-  </section>
+  </div>
 {% endblock %}
 
 {% block extra_js %}

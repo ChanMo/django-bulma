@@ -42,9 +42,9 @@
       <h2 class="subtitle">{% translate "添加邮箱" %}</h2>
 
       <form method="post" action="{% url 'account_email' %}" class="add_email">
-				{% csrf_token %}
-				{% include "form_snippet.html" %}
-				<button class="button is-primary" name="action_add" type="submit">{% translate "保存" %}</button>
+	{% csrf_token %}
+	{{form}}
+	<button class="button is-primary" name="action_add" type="submit">{% translate "保存" %}</button>
       </form>
 
     {% endif %}
