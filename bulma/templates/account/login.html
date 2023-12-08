@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static i18n %}
-{% load account %}
+{% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 {% block navbar %}{% endblock %}
@@ -26,36 +26,54 @@
 {% block content %}
   <div class="columns">
     <div class="column is-narrow">
-      <div class="is-flex is-justify-content-center" style="width:600px;max-width:100%;">
+      <div class="is-flex is-align-items-center is-justify-content-center" style="width:600px;max-width:100%;height:100%;">
 	<div style="width:420px;max-width:100%;" class="py-6 px-5">
 	  {% if request.site.setting.logo %}
 	    <img class="mb-6" src="{{request.site.setting.logo.url}}" style="height:32px;" />
 	  {% endif %}
-	<h1 class="title">欢迎登录</h1>	
-	<form method="post">
-	  {% csrf_token %}
-	  {% if form.non_field_errors %}
-	    <div class="notification is-danger is-light" >{{form.non_field_errors.0}}</div>
-	  {% endif %}
-	  <div class="field">
-	    <label class="label">登录帐号</label>
-	    <input type="text" name="login" class="input" placeholder="用户名, {% if request.site.setting.enabled_phonenumber %}手机号码, {% endif %}邮箱地址" />
-	  </div>
-	  <div class="field">
-	    <label class="label">帐号密码</label>
-	    <input type="password" name="password" class="input" placeholder="登录密码" />
-	  </div>
-	  <p class="has-text-right my-5"><a href="{% if request.site.setting.enabled_phonenumber %}/accounts/password/reset_by_phone/{% else %}/accounts/password/reset/{% endif %}" class="has-text-dark">{% trans "Forgot Password?" %}</a></p>
-	  {% if redirect_field_value %}
-	    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-	  {% endif %}
-	  <div class="field" >
-	    <div class="control" >
-	      <button class="button is-primary is-fullwidth is-medium" type="submit">登  录</button>
+	  <h1 class="title">{% translate "Welcome back" %}</h1>
+	  <form method="post">
+	    {% csrf_token %}
+	    {% if form.non_field_errors %}
+	      <div class="notification is-danger is-light" >{{form.non_field_errors.0}}</div>
+	    {% endif %}
+	    <div class="field">
+	      {{form.login.label_tag}}
+	      {{form.login}}
 	    </div>
-	  </div>
-	  <p class="has-text-centered py-5">还没有帐号? 请先<a href="{{signup_url}}" class="has-text-primary">注册</a></p>
-	</form>
+	    <div class="field">
+	      {{form.password.label_tag}}
+	      {{form.password}}
+	    </div>
+	    <div class="field">
+	      <label class="checkbox">
+		{{form.remember}}
+		{{form.remember.label}}
+	      </label>
+	    </div>
+	    <p class="has-text-right my-5">
+	      <a href="{% url "account_reset_password" %}" class="has-text-dark">{% trans "Forgot Password?" %}</a></p>
+	    {% if redirect_field_value %}
+	      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+	    {% endif %}
+	    <div class="field" >
+	      <div class="control" >
+		<button class="button is-primary is-fullwidth is-medium" type="submit">{% translate "Sign In" %}</button>
+	      </div>
+	    </div>
+	  </form>
+	  
+	  {% get_providers as socialaccount_providers %}
+	  {% if socialaccount_providers %}
+	    <div class="divider"><span>{% trans 'Or Sign in with' %}</span></div>
+	    <div class="buttons is-centered">
+	      {% include "socialaccount/snippets/provider_list.html" with process="login" %}	    
+	    </div>
+	    {% include "socialaccount/snippets/login_extra.html" %}
+	  {% endif %}
+	  <p class="has-text-centered">{% blocktrans %}Don's have an account ?
+	    <a href="{{ signup_url }}">Sign up</a>{% endblocktrans %}
+	  </p>
 	</div>
       </div>
     </div>

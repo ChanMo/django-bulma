@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static thumbnail %}
+{% load static thumbnail i18n %}
 {% block extra_css %}
 {{block.super}}
 <style>
@@ -70,7 +70,7 @@
      {% endif %}
      <form method="post" enctype="multipart/form-data" action="/accounts/update_avatar/?redirect={{request.get_full_path}}">
        {% csrf_token %}
-       <label for="id_avatar" style='justify-content:center;'><span>修改头像</span></label>
+       <label for="id_avatar" style='justify-content:center;'><span>{% translate "Change Avatar" %}</span></label>
        <input name="avatar" id="id_avatar" type="file" class="is-hidden" accept="image/*" />
      </form>
    </figure>
@@ -80,9 +80,9 @@
  </div>
  <div class="tabs is-centered">
   <ul>
-   <li {% if request.path == "/accounts/profile/" %}class="is-active"{% endif %}><a href="/accounts/profile/">基础信息</a></li>
-   <li {% if request.path == "/accounts/email/" %}class="is-active"{% endif %}><a href="/accounts/email/">邮箱设置</a></li>
-   <li {% if request.path == "/accounts/password/set/" %}class="is-active"{% endif %}><a href="/accounts/password/change/">修改密码</a></li>
+   <li {% if request.path == "/accounts/profile/" %}class="is-active"{% endif %}><a href="/accounts/profile/">{% translate "Profile" %}</a></li>
+   <li {% if request.path == "/accounts/email/" %}class="is-active"{% endif %}><a href="/accounts/email/">{% translate "Email Settings" %}</a></li>
+   <li {% if request.path == "/accounts/password/set/" %}class="is-active"{% endif %}><a href="/accounts/password/change/">{% translate "Change Password" %}</a></li>
  </ul>
 </div>
 </section>
@@ -96,10 +96,10 @@
       {{form}}
      <div class="field is-grouped mt-6" >
        <p class="control" >
-         <button type="submit" class="button is-primary" >保存</button>
+         <button type="submit" class="button is-primary" >{% translate "Save" %}</button>
        </p>
        <p class="control" >
-         <button data-goback class="button" >取消</button>
+         <button data-goback class="button" >{% translate "Cancel" %}</button>
        </p>
      </div>
    </form>

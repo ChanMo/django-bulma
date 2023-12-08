@@ -1,10 +1,11 @@
+{% load i18n %}
 {% if page_obj.paginator.num_pages > 1 %}
-  <nav class="pagination" role="navigation" aria-label="pagination">
+  <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
     {% if page_obj.has_previous %}
-      <a class="pagination-previous" href="?page={{page_obj.previous_page_number}}">上一页</a>
+      <a class="pagination-previous" href="?page={{page_obj.previous_page_number}}">{% translate "Previous" %}</a>
     {% endif %}
     {% if page_obj.has_next %}
-      <a class="pagination-next" href="?page={{page_obj.next_page_number}}">下一页</a>
+      <a class="pagination-next" href="?page={{page_obj.next_page_number}}">{% translate "Next page" %}</a>
     {% endif %}
     <ul class="pagination-list">
       {% if page_obj.has_previous %}

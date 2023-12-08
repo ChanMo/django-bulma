@@ -1,0 +1,13 @@
+{% load thumbnail %}
+{% if widget.value %}
+  {% thumbnail widget.value "256" as im %}
+  <figure class="image is-128x128">
+    <img src="{{im.url}}" />
+  </figure>
+  {% endthumbnail %}
+{% endif %}
+{% if widget.is_initial %}
+  {{ widget.initial_text }}: <a href="{{ widget.value.url }}">{{ widget.value }}</a>
+  <br />
+  {{ widget.input_text }}:{% endif %}
+  <input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>

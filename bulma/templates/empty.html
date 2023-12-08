@@ -1,1 +1,5 @@
-<div class="block has-text-grey has-text-centered py-6">这里什么也没有</div>
+{% load static i18n %}
+<div class="block has-text-grey has-text-centered py-6">
+  <img src="{% static "server/img/undraw_blank_canvas_re_2hwy.svg" %}" alt="empty" class="mb-3" style="width:200px;max-width:80%;" />
+  <p>{% trans "Nothing here." %}</p>
+</div>

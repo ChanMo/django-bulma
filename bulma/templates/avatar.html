@@ -1,10 +1,9 @@
-{% load thumbnail %}
-<figure class="image is-{{size}}x{{size}}" style="border-radius:100%;overflow:hidden;">
-  {% if user.avatar %}
-    {% thumbnail user.avatar fullsize crop="center" as im %}
-      <img class="is-rounded" src="{{im.url}}" style="max-height:unset;" />
-    {% endthumbnail %}
-  {% else %}
-    <svg width="{{size}}" height="{{size}}" data-jdenticon-value="{{user.username}}"></svg>
-  {% endif %}
-</figure>
+{% load thumbnail static %}
+{% if user.avatar %}
+  {% thumbnail user.avatar fullsize crop="center" as im %}
+    <img src="{{im.url}}" {#style="max-height:unset;"#} {% for name, value in attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %} />
+  {% endthumbnail %}
+{% else %}
+  {#<svg width="{{size}}" height="{{size}}" data-jdenticon-value="{{user.username}}"></svg>#}
+  <img src="{% static "server/img/avatar.webp" %}" style="max-height:unset;" {% for name, value in attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %} />
+{% endif %}

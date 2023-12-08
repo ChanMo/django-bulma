@@ -2,8 +2,10 @@
 
 {% load i18n static %}
 {% block extra_js %}
+  {% comment %}
   <script src="{% static 'backend/js/cookies.js' %}"></script>
   <script src="{% static 'backend/js/sms.js' %}"></script>
+  {% endcomment %}
 {% endblock %}
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
@@ -17,14 +19,13 @@
 
       <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
-        {% include "form_snippet.html" %}
+	{{form}}
         {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
         <div class="field">
           <button type="submit" class="button is-primary is-fullwidth">{% trans "Sign Up" %} &raquo;</button>
         </div>
-	<!-- <a href="/accounts/connect/" class="button is-fullwidth">Connect Wallet</a> -->
       </form>
     </div>
   </section>

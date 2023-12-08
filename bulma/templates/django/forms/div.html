@@ -3,16 +3,16 @@
   <div>{% for field in hidden_fields %}{{ field }}{% endfor %}</div>
 {% endif %}
 {% for field, errors in fields %}
-  <div{% with classes=field.css_classes %}{% if classes %} class="{{ classes }}"{% endif %}{% endwith %}>
+  <div{% with classes=field.css_classes %}{% if classes %} class="{{ classes }}"{% else %} class="field"{% endif %}{% endwith %}>
     {% if field.use_fieldset %}
       <fieldset>
       {% if field.label %}{{ field.legend_tag }}{% endif %}
     {% else %}
       {% if field.label %}{{ field.label_tag }}{% endif %}
     {% endif %}
-    {% if field.help_text %}<div class="helptext">{{ field.help_text|safe }}</div>{% endif %}
-    {{ errors }}
     {{ field }}
+    {% if field.help_text %}<div class="helptext help">{{ field.help_text|safe }}</div>{% endif %}    
+    {{ errors }}    
     {% if field.use_fieldset %}</fieldset>{% endif %}
     {% if forloop.last %}
       {% for field in hidden_fields %}{{ field }}{% endfor %}

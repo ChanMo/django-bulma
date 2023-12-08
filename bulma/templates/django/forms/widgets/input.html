@@ -1,1 +1,11 @@
-<input {% if widget.type != "checkbox" %}class="input"{% endif %} type="{{type|default:widget.type}}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+<input
+  {% if widget.type != "checkbox" and widget.type != "radio" %}
+    class="input"
+  {% endif %}
+  type="{{type|default:widget.type}}"
+  name="{{ widget.name }}"
+  {% if widget.value != None %}
+    value="{{ widget.value|stringformat:'s' }}"
+  {% endif %}
+  {% include "django/forms/widgets/attrs.html" %}
+>

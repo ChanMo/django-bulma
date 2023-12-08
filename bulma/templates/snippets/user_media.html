@@ -1,0 +1,14 @@
+{% load account_tags %}
+<div class="media">
+  <figure class="media-left">
+    <p class="image is-48x48">
+      {% avatar user 48 class="is-rounded" %}
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <p class="mb-0"><b>{{user}}</b></p>
+      <p>{{user.email}}</p>
+    </div>
+  </div>
+</div>

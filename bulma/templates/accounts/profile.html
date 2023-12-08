@@ -1,11 +1,12 @@
 {% extends "accounts/settings.html" %}
-{% block title %}我的信息{% endblock %}
+{% load i18n %}
+{% block title %}{% translate "Profile" %}{% endblock %}
 {% block inner %}
   <form method="post" >
     {% csrf_token %}
     {{form}}
     <div class="field" >
-      <input class="button is-primary" type="submit" value="修改我的信息" />
+      <input class="button is-primary" type="submit" value="{% translate "Save" %}" />
     </div>
   </form>
 {% endblock %}
