@@ -1,3 +1,23 @@
+[project]
+name = "django_bulmacss"
+version = "0.0.4"
+description = "django-bulmacss 是一个基于 Bulma CSS 的常用 HTML 模板库，为 Django 开发者提供了快速搭建 Django 应用程序的解决方案。"
+keywords = ["django-bulmacss", "django-bulma", "django", "bulma"]
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+  { name="ChanMo", email="chan.mo@outlook.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/ChanMo/django-bulma"
+Issues = "https://github.com/ChanMo/django-bulma/issues"
+
 [build-system]
-requires = ['setuptools>=40.8.0']
-build-backend = 'setuptools.build_meta:__legacy__'
+requires = ['hatchling']
+build-backend = 'hatchling.build'
